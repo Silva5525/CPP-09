@@ -1,0 +1,12 @@
+.vscode
+*.a
+*.o
+*.d
+*.out
+*.csv
+*.DS_Store
+testfile
+testfile.txt
+testfile.txt.replace
+*_shrubbery
+head_input.txt
