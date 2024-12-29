@@ -6,12 +6,16 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:46:22 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/12/20 13:52:56 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/12/29 22:12:06 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
+/// @brief main function of Reverse Polish Notation (RPN) calculator.
+/// @param argc Argument count
+/// @param argv Argument vector
+/// @return 0 on success, 1 on failure
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -34,5 +38,4 @@ int	main(int argc, char **argv)
 	}
 	
 	return (0);
-	
 }

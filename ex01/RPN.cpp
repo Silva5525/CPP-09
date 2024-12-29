@@ -6,17 +6,27 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:46:25 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/12/22 15:07:05 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/12/29 22:27:58 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
+/// @brief checks if a character is an operator
+/// @param c character to check
+/// @return true if c is an operator, false otherwise
 bool	RPN::isOperator(char c)
 {
 	return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
+/// @brief performs an operation on two integers.
+/// @param a the first operand (after first operation holds the result
+/// of the previous operation)
+/// @param b the second operand
+/// @param op the operator to apply
+/// @return the result of the operation or throws an exception if the
+/// operation is invalid or overflows
 int RPN::performOperation(int a, int b, char op)
 {
 	switch (op)
@@ -42,12 +52,21 @@ int RPN::performOperation(int a, int b, char op)
 	}
 }
 
-
-/// @brief 
-/// @param expression 
-/// @return 
+/// @brief evaluates a reverse polish notation expression.
+/// @param expression to evaluate.
+/// @return top of the stack after evaluating the expression or throws
+/// an exception if the expression is invalid.
 /// @note New in C++:
+/// @fn std::stack is a container adapter that gives the programmer the
+/// functionality of a stack - specifically, a LIFO (last-in, first-out)
+/// data structure. (<int> is the type of the stack and operant the name)
+/// @fn size() returns the number of elements in the stack.
+/// @fn push() inserts a new element at the top of the stack.
+/// @fn top() returns a reference to the top element of the stack.
+/// @fn pop() removes the top element of the stack.
 /// @fn tokens() Tokenize the input string.
+/// @overload >> operator extracts the next token from the istringstream
+/// and stores it in the string token. (while it finds a token in tokens)
 int RPN::evaluate(const std::string& expression)
 {
 	std::stack<int> operant;

@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:46:28 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/12/20 14:00:46 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/12/29 22:28:50 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 /// @fn = delete is used here for copy & assign constructor 
 /// to forbid their use.
 /// @attention after using default and delete for all orthodox parts
-/// their is no need for defineing them anymore.
+/// their is no need for defineing them in the .cpp file.
 class RPN
 {
 	private:
