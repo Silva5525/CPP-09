@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 22:31:12 by wdegraf           #+#    #+#             */
-/*   Updated: 2025/05/06 14:45:15 by wdegraf          ###   ########.fr       */
+/*   Updated: 2025/05/06 18:11:05 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ std::vector<size_t> generateJacobsthal(size_t n)
 	}
 	return (num);
 }
-
-
 
 /// @brief Print input values before sorting.
 /// @param type Label ("Vector" or "List")
@@ -120,14 +118,37 @@ void PmergeMe::sortVector(std::vector<int>& data)
 	std::vector<int> sorted = { pairs[0].first };
 	std::vector<size_t> jacob = generateJacobsthal(pairs.size());
 
-	for (size_t j = 1; j < pairs.size(); ++j)
+	// Insert other first values in Jacobsthal-defined order
+	std::vector<bool> inserted(pairs.size(), false);
+	inserted[0] = true;
+
+	for (size_t k = 0; k < jacob.size(); ++k)
 	{
-		int x = pairs[j].first;
-		auto pos = std::lower_bound(sorted.begin(), sorted.end(), x);
-		sorted.insert(pos, x);
+		size_t idx = jacob[k];
+		if (idx >= pairs.size() || inserted[idx])
+			continue;
+
+		auto& pair = pairs[idx];
+		if (pair.first != INT_MAX)
+		{
+			auto pos = std::lower_bound(sorted.begin(), sorted.end(), pair.first);
+			sorted.insert(pos, pair.first);
+			inserted[idx] = true;
+		}
 	}
 
-	for (int val : maxPart)
+	// Catch any missed first values if Jacobsthal skipped them
+	for (size_t j = 1; j < pairs.size(); ++j)
+	{
+		if (!inserted[j] && pairs[j].first != INT_MAX)
+		{
+			auto pos = std::lower_bound(sorted.begin(), sorted.end(), pairs[j].first);
+			sorted.insert(pos, pairs[j].first);
+		}
+	}
+
+	// Now insert the second values
+	for (const int val : maxPart)
 	{
 		if (val != INT_MAX)
 		{
@@ -138,7 +159,6 @@ void PmergeMe::sortVector(std::vector<int>& data)
 
 	data = sorted;
 }
-
 
 /// @brief Handles sorting a vector and timing the operation.
 /// @param in Vector to sort
@@ -235,27 +255,53 @@ void PmergeMe::sortList(std::list<int>& data)
 
 	std::list<int> sorted = { pairs.front().first };
 
-	auto jacob = generateJacobsthal(pairs.size());
+	std::vector<size_t> jacob = generateJacobsthal(pairs.size());
+	std::vector<bool> inserted(pairs.size(), false);
+	inserted[0] = true;
 
-	for (auto it = std::next(pairs.begin()); it != pairs.end(); ++it)
+	auto pair_it = pairs.begin();
+	std::advance(pair_it, 1);
+
+	for (size_t k = 0; k < jacob.size(); ++k)
 	{
-		if (it->first == INT_MAX) continue;
+		size_t idx = jacob[k];
+		if (idx >= pairs.size() || inserted[idx])
+			continue;
+
+		auto find_it = pairs.begin();
+		std::advance(find_it, idx);
+		if (find_it->first == INT_MAX) continue;
+
 		auto pos = std::find_if(sorted.begin(), sorted.end(),
-					[&](int x){ return x > it->first; });
-		sorted.insert(pos, it->first);
+								[&](int x) { return x > find_it->first; });
+		sorted.insert(pos, find_it->first);
+		inserted[idx] = true;
+	}
+
+	for (size_t j = 1; j < pairs.size(); ++j)
+	{
+		if (inserted[j])
+			continue;
+
+		auto find_it = pairs.begin();
+		std::advance(find_it, j);
+		if (find_it->first == INT_MAX) continue;
+
+		auto pos = std::find_if(sorted.begin(), sorted.end(),
+								[&](int x) { return x > find_it->first; });
+		sorted.insert(pos, find_it->first);
 	}
 
 	for (const int val : maxPart)
 	{
 		if (val == INT_MAX) continue;
 		auto pos = std::find_if(sorted.begin(), sorted.end(),
-					[&](int x){ return x > val; });
+								[&](int x) { return x > val; });
 		sorted.insert(pos, val);
 	}
 
 	data = sorted;
 }
-
 
 /// @brief Handles sorting a list and timing the operation.
 /// @param in List to sort

@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 22:30:38 by wdegraf           #+#    #+#             */
-/*   Updated: 2025/05/06 14:34:12 by wdegraf          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:18:22 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 /// sequence — this builds the base. Then I insert the sorted 'second'
 /// elements one-by-one using binary search. I’ve also generated the Jacobsthal
 /// sequence to reflect how the full Ford-Johnson optimizes insertion order,
-/// although my insertions are still linear. The goal was to stay faithful to
-///the structure while keeping the implementation clean and efficient.
+/// although my insertions are still linear.
 int main(int argc, char** argv)
 {
     if (argc < 2)
